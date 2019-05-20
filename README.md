@@ -1,2 +1,3 @@
 # SNV2
-Detection of tissue-specific co-expression of single nucleotide variants
+Reconstruction of SNV-SNV Interaction Networks via Computational
+Detection of Variant Co-expression in RNA-sequencing Data
