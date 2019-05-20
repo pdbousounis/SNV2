@@ -8,17 +8,18 @@ Getting Started:
 These instructions will get you a copy of the scripts up and running on your machine for development and testing purposes. See Running the scripts for notes on how to use the project on a live system.
 
 Prerequisites:
-Each of the following scripts copied to a working directory on your machine
+- An R (>3.5) installation with the following packages: corrplot, data.table, dplyr, factoextra, ggplot2, ggpubr, gtools, MatrixEQTL, pacman, pheatmap, psych, RColorBrewer, stringr, tidyr
+- Each of the following scripts copied to a working directory on your machine:
 
- A-build_snvsnv_matrix_CLine.R
- B-build_snvsnv_cov_matrix_CLine.R
- C-run_snvsnv_matrixEQTL_cov_CLine.R
- D-scatter_plots_SNV2_CLine.R
- E-plot_snvsnv_eQTL_correlograms_CLine.R
+  A-build_snvsnv_matrix_CLine.R
+  B-build_snvsnv_cov_matrix_CLine.R
+  C-run_snvsnv_matrixEQTL_cov_CLine.R
+  D-scatter_plots_SNV2_CLine.R
+  E-plot_snvsnv_eQTL_correlograms_CLine.R
 
 You can obtain the full toolkit here.
 
-Output .csv files from our ReadCounts tool (https://github.com/HorvathLab/NGS/tree/master/readCounts) containing the read counts extracted per SNV for each sample
+*Output .csv files must be obtained from our ReadCounts tool (https://github.com/HorvathLab/NGS/tree/master/readCounts) containing the read counts extracted per SNV for each sample
 
 
 Running the scripts
@@ -103,7 +104,7 @@ Sample command:
 $ Rscript nerve_234_SNV2_Output 21 nerve_234
 
 Authors:
-Pavlos Bousounis
+Pavlos Bousounis (pbousounis@protonmail.com)
 
 Acknowledgements:
 - Liam F Spurr, Justin Sein, and Anelia Horvath for support and assistance in the development of this toolkit
