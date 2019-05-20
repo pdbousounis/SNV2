@@ -121,7 +121,7 @@ Create SNV-SNV correlation plots for a designted chromosome
 
 #### Input arguments:
 * <prefix>_SNV2_Output directory from previous step
-* Chromosome(s) to plot 
+* Chromosome to plot 
 * Desired prefix for output file
 
 #### Output:
