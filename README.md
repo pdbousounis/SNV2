@@ -18,7 +18,7 @@ These instructions will get you a copy of the scripts up and running on your mac
   D-scatter_plots_SNV2_CLine.R
   E-plot_snvsnv_eQTL_correlograms_CLine.R
   ```
-You can obtain the full toolkit [here.] (https://github.com/pdbousounis/SNV2)
+You can obtain the full toolkit [here.](https://github.com/pdbousounis/SNV2)
 
 *Output *.csv* files must be obtained from our ReadCounts tool (https://github.com/HorvathLab/NGS/tree/master/readCounts) containing the read counts extracted per SNV for each sample
 
