@@ -1,16 +1,28 @@
+#!/usr/bin/env Rscript
+
 ## Build snv/snv table for MatrixEQTL
 gctorture(on = F)
 
 # get command line arguments
-args <- commandArgs[trailingOnly = T]
+args <- commandArgs(trailingOnly = T)
 
-# install/load missing required packages 
-if(!require('pacman')) {install.packages('pacman', dep = T); library(pacman)}
-p_load(data.table, dplyr)
+# install required packages if missing and load 
+load_package <- function(x) {
+  if (!require(x, character.only = TRUE)) {
+    install.packages(x, dep = TRUE)
+    if(!require(x, character.only = TRUE)) stop(paste0("Package: ", x, " not found"))
+  }
+}
+
+load_package("data.table"); load_package("dplyr"); 
+
 
 # location of the readcount files
 csv_dir <- args[1]
 snv_files <- list.files(csv_dir, pattern='.csv')
+
+# create prefix for output files
+prfx <- args[2]
 
 # create an empty data table to hold the combined readcounts
 dtab <- data.table()
@@ -33,17 +45,8 @@ gc()
 # create SNP identifier
 dtab[, SNP := paste0(CHROM, ':', POS, '_', REF, '>', ALT)]
 
-# OPTIONAL: select chromosome(s)
-chrm <- c(1:22, 'X', 'Y')[]
-if(length(chrm) == 1) {
-  dtab <- dtab[grep(paste0('^', chrm, ':'), dtab$SNP), ]
-}
-
 # get number of samples
 num_samples <- length(unique(dtab$SAMPLE))
-
-# create prefix for output files
-prfx <- args[2]
 
 # spread VAF values (R) by Sample and SNV
 dcat <- dcast(dtab, SNP ~ SAMPLE, value.var = 'R')
@@ -70,7 +73,7 @@ d_loc <- unique(dtab[SNP %in% dcat2$SNP][, .(SNP, CHROM, POS)])
 d_gene_loc <- copy(d_loc)[, POS2 := POS]
 
 # create/specify output directory
-dir_out <- file.path(csv_dir, '..', paste0(prfx, '_SNV2_Output'))
+dir_out <- paste0(csv_dir, paste0(prfx, '_SNV2_Output'))
 
 if(!dir.exists(dir_out)) {
   dir.create(dir_out)
@@ -85,14 +88,13 @@ loc_file <- file.path(dir_out, paste0(prfx, '-snv_locations.tsv'))
 fwrite(d_loc, loc_file, quote = F, row.names = F, sep = '\t')
 gen_loc_file <- file.path(dir_out, paste0(prfx, '-gene_locations.tsv'))
 fwrite(d_gene_loc, gen_loc_file, quote = F, row.names = F, sep = '\t')
-
-# clean up environment if files are successfully saved
-if(file.info(mat_file)$size != 0 & file.info(loc_file)$size != 0 & file.info(gen_loc_file)$size != 0){
-  print('Output saved, clearing workspace..')
-  rm(list = ls())
-} else {
-  print('Error: one or more of the output files is empty!')
-}
-
 gc()
+
+if(file.info(mat_file)$size != 0 & file.info(loc_file)$size != 0 & file.info(gen_loc_file)$size != 0){
+  print(paste0(paste0(prfx, '-snv_matrix.tsv, '),
+        paste0(prfx, '-snv_locations.tsv, AND '),
+        paste0(prfx, '-gene_locations.tsv SAVED TO '),
+        dir_out))
+  } 
+
 

@@ -1,9 +1,18 @@
+#!/usr/bin/env Rscript
+
 ## Build covariates table for MatrixEQTL input
 gctorture(on = F)
 
-# install/load missing required packages 
-if(!require('pacman')) {install.packages('pacman'); library(pacman)}
-p_load(data.table, dplyr, factoextra)
+
+# install required packages if missing and load 
+load_package <- function(x) {
+  if (!require(x, character.only = TRUE)) {
+    install.packages(x, dep = TRUE)
+    if(!require(x, character.only = TRUE)) stop(paste0("Package: ", x, " not found"))
+  }
+}
+
+load_package('data.table'); load_package('dplyr'); load_package('factoextra')
 
 # get command line arguments
 args <- commandArgs(trailingOnly = T)
@@ -71,12 +80,12 @@ fviz_pca_var(pca,
  )
 dev.off()
 
+gc()
+
 # clean up environment if files are successfully saved
 if(file.info(cov_file)$size != 0 & file.info(pca_plot)$size != 0){
-  print('Output saved, clearing workspace..')
-  rm(list = ls())
-} else {
-  print('Error: one or more of the output files is empty!')
-}
+  print(paste0(paste0(prfx, '-PC10_covariates.tsv AND '),
+               paste0(prfx, '-pca_plots.pdf SAVED TO '),
+               base_dir))
+} 
 
-gc()

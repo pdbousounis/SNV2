@@ -1,6 +1,18 @@
-  library(pacman) 
-  p_load(data.table, dplyr, ggplot2, ggpubr, gtools, stringr, tidyr)
-  detach("package:psych", unload=TRUE)
+#!/usr/bin/env Rscript 
+  
+# install required packages if missing and load 
+load_package <- function(x) {
+  if (!require(x, character.only = TRUE)) {
+    install.packages(x, dep = TRUE)
+    if(!require(x, character.only = TRUE)) stop(paste0("Package: ", x, " not found"))
+  }
+}
+
+
+  load_package('data.table'); load_package('dplyr'); load_package('ggplot2'); load_package('ggpubr'); 
+  load_package('gtools'); load_package('stringr'); load_package('tidyr')
+  if('psych' %in% (.packages())) {detach("package:psych", unload=TRUE)}
+
   
   # get command line arguments
   args <- commandArgs(trailingOnly = T)
@@ -61,17 +73,15 @@
   
   
   plot_file <- file.path(base_dir, fname)
-  #height <- ceiling(nrow(in_file)/5)*10
-  #ifelse(nrow(in_file < 5), width <- nrow(in_file)*10, width <- 50)
+  
   png(plot_file, height = 400, width = 50, units = 'in', res = 120)
   facet(p, facet.by = "id", ncol = 5, scales = "free_y",
         panel.labs.font = list(face = 'bold', size = 30))
   dev.off()
   
-  # clean up environment
+  gc()
+  
   if(file.info(plot_file)$size != 0){
-    print('Output saved, clearing workspace..')
-    rm(list = ls())
-    gc()
+    print(paste0(fname, ' SAVED TO ', base_dir))
   }
   

@@ -1,11 +1,20 @@
+#!/usr/bin/env Rscript
+
 ## Run MatrixEQTL: SNV vs. SNV
 
 # get command line arguments
 args <- commandArgs(trailingOnly = T)
 
-# install missing required packages and load 
-if(!require(pacman)) {install.packages(pacman, dep = TRUE); library(pacman)}
-p_load(data.table, MatrixEQTL, psych, gtools)
+# install required packages if missing and load 
+load_package <- function(x) {
+  if (!require(x, character.only = TRUE)) {
+    install.packages(x, dep = TRUE)
+    if(!require(x, character.only = TRUE)) stop(paste0("Package: ", x, " not found"))
+  }
+}
+
+load_package('data.table'); load_package('MatrixEQTL'); load_package('pych'); load_package('gtools')
+
 
 # Linear model to use (modelANOVA, modelLINEAR, or modelLINEAR_CROSS)
 useModel <- modelLINEAR;
@@ -16,7 +25,6 @@ base_dir <- args[1]
 # create prefix for output files
 prfx <- args[2]
   
-
 snv_matrix <- list.files(base_dir, pattern = 'snv_matrix.tsv')
 snv_loc <- list.files(base_dir, pattern = '-snv_locations.tsv')
 gen_loc <- list.files(base_dir, pattern = '-gene_locations.tsv')
@@ -117,12 +125,13 @@ fwrite(cis_eqtls, cis_file, quote = F, sep = '\t')
 trans_file <- file.path(base_dir, paste0(prfx, '-transEQTL_table.tsv'))
 fwrite(trans_eqtls, trans_file, quote = F, sep = '\t')
 
-# clean up environment if files are successfully saved
-if(file.info(cis_file)$size != 0 & file.info(trans_file)$size != 0){
-  print('Output saved, clearing workspace..')
-  rm(list = ls())
-} else {
-  print('Error: one or more of the output files is empty!')
-}
-
 gc()
+
+if(file.info(cis_file)$size != 0 & file.info(trans_file)$size != 0){
+  print(paste0(paste0(prfx, '-cisEQTL_table.tsv, '), 
+               paste0(prfx, '-transEQTL_table.tsv, AND '),
+               paste0(prfx, '-matrixEQTL_results.pdf SAVED TO '),
+               base_dir))
+} 
+
+

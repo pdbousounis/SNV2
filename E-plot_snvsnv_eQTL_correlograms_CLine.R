@@ -1,12 +1,21 @@
-# NEW_CORR_PLOTTING.R
+#!/usr/bin/env Rscript
 
-library(pacman)
-p_load(data.table, corrplot, gtools, pheatmap, RColorBrewer)
+# install required packages if missing and load 
+load_package <- function(x) {
+  if (!require(x, character.only = TRUE)) {
+    install.packages(x, dep = TRUE)
+    if(!require(x, character.only = TRUE)) stop(paste0("Package: ", x, " not found"))
+  }
+}
 
+load_package("data.table"); load_package("corrplot"); load_package("gtools"); load_package("pheatmap"); 
+load_package("RColorBrewer")
+
+args <- commandArgs(trailingOnly = T)
 
   ### set base directory 
   base_dir <- args[1]
-  ### select chromosome number:
+  ### select chromosome number
   chrom <- args[2]
   
   # locate input files
@@ -53,11 +62,16 @@ p_load(data.table, corrplot, gtools, pheatmap, RColorBrewer)
   tNTb <- data.matrix(tNT[ , ..SNPb])
   
   # build the correlation table for the selected chromosome
-  system.time(cormatNT <- cor(tNTa, tNTb, use="pairwise.complete.obs", method="spearman"))
+  system.time(cormatNT <- cor(tNTa, tNTb, use = "pairwise.complete.obs", method="spearman"))
   gc()
   
   # import gene annotations file
   sea_file <- list.files(file.path(base_dir, '..'), pattern = 'SeattleSeqAnnotation', full.names = T)
+  
+  if(length(sea_file) == 0){
+    stop("SEATTLE SEQ ANNOTATION FILE NOT FOUND", call. = F)
+  }
+  
   sea <- fread(sea_file, fill = T)[, SNP := paste0('chr', chromosome, ':', position, '_', referenceBase, '>', sampleGenotype)]
   
   sea_chrom <- unique(sea, by = 'SNP')[, .(SNP, geneList)][data.table(SNP = rownames(cormatNT)), on = 'SNP'][mixedorder(SNP)]
@@ -84,10 +98,9 @@ p_load(data.table, corrplot, gtools, pheatmap, RColorBrewer)
   for(i in seq(1, length(at), 1)){at[i] <- at[i] - 1}
   at <- at[-1]
   
-  plot_file <- file.path(base_dir, paste0(prfx, '_corrplot_newstyle.png'))
+  plot_file <- file.path(base_dir, paste0(prfx, '_', 'chr', chrom, '_correlogram.png'))
   # add row annotations
-  pheatmap(mymat, main = paste0('\n', prfx, '\n cistrans SNV-SNV Correlations')
-    ,
+  pheatmap(mymat, main = paste0('\n', prfx, '\n cistrans SNV-SNV Correlations'),
            cluster_cols = F, cluster_rows = F, angle_col = 45,
            cellheight = 5, cellwidth = 5,
            annotation_row = mydf, annotation_names_row = F, annotation_legend = F,
@@ -101,5 +114,7 @@ p_load(data.table, corrplot, gtools, pheatmap, RColorBrewer)
 
 gc()
 
-#if(file.info(plot_file)[["size"]] > 0){rm(list = ls())}
+if(file.info(plot_file)[["size"]] > 0){
+  print(paste0(plot_file, ' SAVED TO ', base_dir))
+}
   
