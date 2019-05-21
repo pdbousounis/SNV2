@@ -118,6 +118,7 @@ Rscript D-scatter_plots_SNV2_CLine.R nerve_234_SNV2_Output cis nerve_234
 
 ### E-plot\_snvsnv_eQTL_correlograms_CLine.R
 Create SNV-SNV correlation plots for a designted chromosome
+* *NOTE*: Requires a SeattleSeq annotation file generated from the SNV location matrix and located within the <prefix>_SNV2_Output directory
 
 #### Input arguments:
 * <prefix>_SNV2_Output directory from previous step
