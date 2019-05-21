@@ -8,15 +8,14 @@ This toolkit contains the required scripts to transform sequencing files into SN
 These instructions will get you a copy of the scripts up and running on your machine for development and testing purposes. See Running the scripts for notes on how to use the project on a live system.
 
 ### Prerequisites:
-* An R (>3.5) installation with the following packages: corrplot, data.table, dplyr, factoextra, ggplot2, ggpubr, gtools, MatrixEQTL, pacman, pheatmap, psych, RColorBrewer, stringr, tidyr
+* An R (>3.5) installation. The following packages are required and will be installed automatically: 
+corrplot, data.table, dplyr, factoextra, ggplot2, ggpubr, gtools, MatrixEQTL, psych, RColorBrewer, stringr, tidyr
 * Each of the following scripts copied to a working directory on your machine:
   
   ```
   A-build_snvsnv_matrix_CLine.R
   B-build_snvsnv_cov_matrix_CLine.R
   C-run_snvsnv_matrixEQTL_cov_CLine.R
-  D-scatter_plots_SNV2_CLine.R
-  E-plot_snvsnv_eQTL_correlograms_CLine.R
   ```
 You can obtain the full toolkit [here.](https://github.com/pdbousounis/SNV2)
 
@@ -88,51 +87,6 @@ In the (prefix)_SNV2_Output directory from the previous step:
 #### Sample command:
 ```
 Rscript C-run_snvsnv_matrixEQTL_cov_CLine.R nerve_234_SNV2_Output nerve_234
-```
-&nbsp;
-
-***
-
-&nbsp;
-
-### D-scatter\_plots_SNV2_CLine.R
-Visualize individual SNV-SNV correlations across all patients as scatter plots
-
-#### Input arguments:
-* (prefix)_SNV2_Output directory from previous step
-* Designate data to plot, one of 'cis' or 'trans'
-* Desired prefix for output file
-
-#### Output:
-In the (prefix)_SNV2_Output directory from the previous step:
-* A single .png file of the top 200 significant (FDR < 0.05) SNV-SNV correlations, sorted by lowest FDR value
-
-#### Sample command:
-```
-Rscript D-scatter_plots_SNV2_CLine.R nerve_234_SNV2_Output cis nerve_234
-```
-&nbsp;
-
-***
-
-&nbsp;
-
-### E-plot\_snvsnv_eQTL_correlograms_CLine.R
-Create SNV-SNV correlation plots for a designted chromosome
-* *NOTE*: Requires a SeattleSeq annotation file generated from the SNV location matrix and located within the (prefix)_SNV2_Output directory
-
-#### Input arguments:
-* (prefix)_SNV2_Output directory from previous step
-* Chromosome to plot 
-* Desired prefix for output file
-
-#### Output:
-In the (prefix)_SNV2_Output directory from the previous step:
-* A correlogram of VAFRNA values for each significant SNV-SNV interaction  
-
-#### Sample command:
-```
-Rscript nerve_234_SNV2_Output 21 nerve_234
 ```
 &nbsp;
 
