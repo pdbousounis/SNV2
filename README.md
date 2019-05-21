@@ -34,7 +34,7 @@ Transforms the read counts into a variant fraction matrix with information from 
 * A user-defined prefix for the output files
 
 #### Output: 
-* *All output files are saved in a new directory (<prefix>_SNV2_Output) created within the .csv file input directory (it is created if not already present)*
+* *All output files are saved in a new directory ((prefix)_SNV2_Output) created within the .csv file input directory (it is created if not already present)*
 * A SNV matrix of VAFRNA values for each SNV by sample
 * A matrix of SNV locations
 
@@ -52,12 +52,12 @@ Rscript A-build_snvsnv_matrix_CLine.R /home/readcounts/ nerve_234
 Creates a covariant matrix from sample metadata (GTEx used here) including Age, Gender, Ethnicity, and the top 10 prinicpal components
 
 #### Input arguments:
-* <prefix>_SNV2_Output directory from previous step
+* (prefix)_SNV2_Output directory from previous step
 * A directory containing sample metadata files (here construced for GTEx data)
 * Desired output file prefix
 
 #### Output:
-In the <prefix>_SNV2_Output directory from the previous step:
+In the (prefix)_SNV2_Output directory from the previous step:
 * A matrix of covariates and top 10 PCs for each sample
 * Scree and PC contribution plots (.png)
   
@@ -80,7 +80,7 @@ Rscript nerve_234_SNV2_Output sample_metadata_directory nerve_234
 * *NOTE*: Covariates file is optional (requires modification of the script as specified in the in-code documentation, line 32)
 
 #### Output:
-In the <prefix>_SNV2_Output directory from the previous step:
+In the (prefix)_SNV2_Output directory from the previous step:
 * One file with the cis eQTLs with a p-value < 0.00001
 * One file with the trans eQTLs with a p-value < 0.00001
 * QQ-plot of distant vs local p-value distributions (.png)
@@ -99,12 +99,13 @@ Rscript C-run_snvsnv_matrixEQTL_cov_CLine.R nerve_234_SNV2_Output nerve_234
 Visualize individual SNV-SNV correlations across all patients as scatter plots
 
 #### Input arguments:
-1. <prefix>_SNV2_Output directory from previous step
-2. Designate data to plot, one of 'cis' or 'trans'
-3. Desired prefix for output file
+* (prefix)_SNV2_Output directory from previous step
+* Designate data to plot, one of 'cis' or 'trans'
+* Desired prefix for output file
 
 #### Output:
-1. A single .png file of the top 200 significant (FDR < 0.05) SNV-SNV correlations, sorted by lowest FDR value
+In the (prefix)_SNV2_Output directory from the previous step:
+* A single .png file of the top 200 significant (FDR < 0.05) SNV-SNV correlations, sorted by lowest FDR value
 
 #### Sample command:
 ```
@@ -121,11 +122,12 @@ Create SNV-SNV correlation plots for a designted chromosome
 * *NOTE*: Requires a SeattleSeq annotation file generated from the SNV location matrix and located within the <prefix>_SNV2_Output directory
 
 #### Input arguments:
-* <prefix>_SNV2_Output directory from previous step
+* (prefix)_SNV2_Output directory from previous step
 * Chromosome to plot 
 * Desired prefix for output file
 
 #### Output:
+In the (prefix)_SNV2_Output directory from the previous step:
 * A correlogram of VAFRNA values for each significant SNV-SNV interaction  
 
 #### Sample command:
