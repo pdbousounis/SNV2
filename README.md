@@ -2,7 +2,7 @@
 Reconstruction of SNV-SNV Interaction Networks via Computational
 Detection of Variant Co-expression in RNA-sequencing Data
 
-This toolkit contains the required scripts to transform sequencing files into SNV^2 input files then run the MatrixEQTL R package to determine significant variation-variation relationships.
+This toolkit contains the required scripts to transform sequencing files into SNV<sup>2</sup> input tables and then run the MatrixEQTL R package to determine significant variant-variant relationships.
 
 ## Getting Started:
 These instructions will get you a copy of the scripts up and running on your machine for development and testing purposes. See ***Running the scripts*** for notes on how to use the project on a live system.
@@ -34,7 +34,7 @@ Transforms the read counts into a variant fraction matrix with information from 
 
 #### Output: 
 * *All output files are saved in a new directory ((prefix)_SNV2_Output) created within the .csv file input directory (it is created if not already present)*
-* A SNV matrix of VAFRNA values for each SNV by sample
+* A SNV matrix of VAF<sub>RNA</sub> values for each SNV by sample
 * A matrix of SNV locations
 
 #### Sample command:
