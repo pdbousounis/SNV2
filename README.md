@@ -1,14 +1,14 @@
-# SNV2
+# SNV<sup>2</sup>
 Reconstruction of SNV-SNV Interaction Networks via Computational
 Detection of Variant Co-expression in RNA-sequencing Data
 
 This toolkit contains the required scripts to transform sequencing files into SNV^2 input files then run the MatrixEQTL R package to determine significant variation-variation relationships.
 
 ## Getting Started:
-These instructions will get you a copy of the scripts up and running on your machine for development and testing purposes. See Running the scripts for notes on how to use the project on a live system.
+These instructions will get you a copy of the scripts up and running on your machine for development and testing purposes. See ***Running the scripts*** for notes on how to use the project on a live system.
 
 ### Prerequisites:
-* An R (>3.5) installation. The following packages are required and will be installed automatically: 
+* An R (>3.5) installation. The following packages are required; SNV2 will be installed automatically: 
 corrplot, data.table, dplyr, factoextra, ggplot2, ggpubr, gtools, MatrixEQTL, psych, RColorBrewer, stringr, tidyr
 * Each of the following scripts copied to a working directory on your machine:
   
