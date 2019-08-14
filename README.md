@@ -8,7 +8,7 @@ This toolkit contains the required scripts to transform sequencing files into SN
 These instructions will get you a copy of the scripts up and running on your machine for development and testing purposes. See ***Running the scripts*** for notes on how to use the project on a live system.
 
 ### Prerequisites:
-* An R (>3.5) installation. The following packages are required; SNV2 will be installed automatically: 
+* An R (>3.5) installation. The following packages are required; SNV<sup>2</sup> will attempt to install them automatically: 
 corrplot, data.table, dplyr, factoextra, ggplot2, ggpubr, gtools, MatrixEQTL, psych, RColorBrewer, stringr, tidyr
 * Each of the following scripts copied to a working directory on your machine:
   
