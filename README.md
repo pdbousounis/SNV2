@@ -2,7 +2,7 @@
 Reconstruction of SNV-SNV Interaction Networks via Computational
 Detection of Variant Co-expression in RNA-sequencing Data
 
-This toolkit contains the required scripts to transform sequencing files into SNV^2 input files then run the MatrixEQTL R package to determine significant variation-expression relationships.
+This toolkit contains the required scripts to transform sequencing files into SNV^2 input files then run the MatrixEQTL R package to determine significant variation-variation relationships.
 
 ## Getting Started:
 These instructions will get you a copy of the scripts up and running on your machine for development and testing purposes. See Running the scripts for notes on how to use the project on a live system.
